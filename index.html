@@ -289,20 +289,19 @@
 
       // Envío en paralelo a ambos servicios
       const sendPromises = urls.map(url =>
-        fetch(url, {
-          method: 'POST',
-          body: encodedData,
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' }
-        })
+      fetch(url, {
+        method: 'POST',
+        body: encodedData,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        mode: 'no-cors'
+      })
+
       );
 
       try {
         const response = await Promise.any(sendPromises);
-        if (response.ok) {
-          window.location.href = "mensaje-enviado.html";
-        } else {
-          throw new Error();
-        }
+        window.location.href = "mensaje-enviado.html";
+
       } catch {
         alert("There was a problem sending your message. Please try again later.");
       }
@@ -319,5 +318,6 @@
 
 </body>
 </html>
+
 
 
