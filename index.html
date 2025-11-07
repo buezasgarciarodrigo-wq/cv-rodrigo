@@ -24,6 +24,7 @@
 </head>
 <body class="font-body bg-gray-50">
 
+  <!-- Navigation -->
   <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-sm shadow-sm z-50">
     <div class="max-w-6xl mx-auto px-6 py-4">
       <div class="flex justify-between items-center">
@@ -39,6 +40,7 @@
     </div>
   </nav>
 
+  <!-- Hero Section -->
   <section class="hero-bg min-h-screen flex items-center relative overflow-hidden" id="home">
     <div class="relative z-10 max-w-6xl mx-auto px-6 py-20">
       <div class="grid md:grid-cols-2 gap-12 items-center">
@@ -67,6 +69,7 @@
     </div>
   </section>
 
+  <!-- About Section -->
   <section class="py-20 bg-white" id="about">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center mb-16 fade-in">
@@ -107,6 +110,7 @@
     </div>
   </section>
 
+  <!-- Experience Section -->
   <section class="py-20 bg-gray-50" id="experience">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center mb-16 fade-in">
@@ -137,6 +141,7 @@
     </div>
   </section>
 
+  <!-- Skills Section -->
   <section class="py-20 bg-white" id="skills">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center mb-16 fade-in">
@@ -178,6 +183,7 @@
     </div>
   </section>
 
+  <!-- Contact Section -->
   <section class="py-20 bg-gray-900 text-white" id="contact">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center mb-16 fade-in">
@@ -252,32 +258,64 @@
   </footer>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
+    function initPage() {
+      if (window.__cv_initialized) return;
+      window.__cv_initialized = true;
+
       const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
       }, { threshold: 0.1 });
       document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
       const bars = document.querySelectorAll('.skill-bar');
       const barObserver = new IntersectionObserver(entries => {
         entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('animate'); });
       }, { threshold: 0.3 });
       bars.forEach(bar => barObserver.observe(bar));
+
       const form = document.getElementById('contact-form');
+      if (!form) return;
       form.addEventListener('submit', async e => {
         e.preventDefault();
         const data = new FormData(form);
-        try {
-          let res = await fetch('https://formsubmit.co/buezasgarciarodrigo@gmail.com', { method: 'POST', body: data });
-          if (!res.ok) throw new Error();
-        } catch {
-          await fetch('https://formspree.io/f/xgvpggjo', { method: 'POST', body: data });
+        const redirectURL = form.querySelector('input[name="_next"]') ? form.querySelector('input[name="_next"]').value : 'mensaje-enviado.html';
+
+        const urls = [
+          'https://formsubmit.co/buezasgarciarodrigo@gmail.com',
+          'https://formspree.io/f/xgvpggjo'
+        ];
+
+        let sent = false;
+        for (const url of urls) {
+          try {
+            const response = await fetch(url, {
+              method: 'POST',
+              body: data,
+              headers: { 'Accept': 'application/json' }
+            });
+            if (response.ok) {
+              sent = true;
+              window.location.href = redirectURL;
+              break;
+            }
+          } catch (err) {
+            console.warn('submit error', err);
+          }
         }
-        window.location.href = "mensaje-enviado.html";
+
+        if (!sent) {
+          alert('❌ Could not send your message. Please try again later.');
+        }
       });
-    });
+    }
+
+    document.addEventListener('DOMContentLoaded', initPage);
+
     window.addEventListener('pageshow', function(event) {
       if (event.persisted) {
         window.location.reload();
+      } else {
+        initPage();
       }
     });
   </script>
