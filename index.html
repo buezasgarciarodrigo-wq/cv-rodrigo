@@ -298,17 +298,16 @@
                 <div class="fade-in">
                     <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8">
                         <h3 class="font-display text-2xl font-bold mb-6">Quick Message</h3>
-                            <form action="https://formsubmit.co/buezasgarciarodrigo@gmail.com" method="post" class="space-y-4">
-                                <input type="text" name="name" placeholder="Your Name" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:border-white/40"/>
-                                <input type="email" name="email" placeholder="Your Email" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:border-white/40"/>
-                                <textarea name="message" placeholder="Your Message" rows="4" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:border-white/40 resize-none"></textarea>
+                            <form action="https://api.web3forms.com/submit/buezasgarciarodrigo@gmail.com" method="post" class="space-y-4">
+                              <input type="text" name="name" placeholder="Your Name" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:border-white/40"/>
+                              <input type="email" name="email" placeholder="Your Email" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:border-white/40"/>
+                              <textarea name="message" placeholder="Your Message" rows="4" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:border-white/40 resize-none"></textarea>
                             
-                                <!-- Deshabilita CAPTCHA y fuerza redirección absoluta -->
-                                <input type="hidden" name="_captcha" value="false">
-                                <input type="hidden" name="_next" value="https://buezasgarciarodrigo-wq.github.io/cv-rodrigo/mensaje-enviado.html">
-                                <input type="hidden" name="_override" value="true">
+                              <!-- Redirección y clave -->
+                              <input type="hidden" name="access_key" value="PUBLIC_ACCESS_KEY">
+                              <input type="hidden" name="redirect" value="https://buezasgarciarodrigo-wq.github.io/cv-rodrigo/mensaje-enviado.html">
                             
-                                <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-lg transition-all transform hover:scale-105">Send Message</button>
+                              <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-lg transition-all transform hover:scale-105">Send Message</button>
                             </form>
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-8">
@@ -350,5 +349,6 @@
 </body>
 
 </html>
+
 
 
