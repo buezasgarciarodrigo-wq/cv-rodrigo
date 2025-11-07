@@ -257,67 +257,59 @@
     </div>
   </footer>
 
-  <script>
-    function initPage() {
-      if (window.__cv_initialized) return;
-      window.__cv_initialized = true;
-
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-      }, { threshold: 0.1 });
-      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-      const bars = document.querySelectorAll('.skill-bar');
-      const barObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('animate'); });
-      }, { threshold: 0.3 });
-      bars.forEach(bar => barObserver.observe(bar));
-
-      const form = document.getElementById('contact-form');
-      if (!form) return;
-      form.addEventListener('submit', async e => {
-        e.preventDefault();
-        const data = new FormData(form);
-        const redirectURL = form.querySelector('input[name="_next"]') ? form.querySelector('input[name="_next"]').value : 'mensaje-enviado.html';
-
-        const urls = [
-          'https://formsubmit.co/buezasgarciarodrigo@gmail.com',
-          'https://formspree.io/f/xgvpggjo'
-        ];
-
-        let sent = false;
-        for (const url of urls) {
-          try {
-            const response = await fetch(url, {
-              method: 'POST',
-              body: data,
-              headers: { 'Accept': 'application/json' }
-            });
-            if (response.ok) {
-              sent = true;
-              window.location.href = redirectURL;
-              break;
-            }
-          } catch (err) {
-            console.warn('submit error', err);
-          }
-        }
-
-        if (!sent) {
-          alert('❌ Could not send your message. Please try again later.');
-        }
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
       });
-    }
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-    document.addEventListener('DOMContentLoaded', initPage);
+    const bars = document.querySelectorAll('.skill-bar');
+    const barObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('animate');
+      });
+    }, { threshold: 0.3 });
+    bars.forEach(bar => barObserver.observe(bar));
 
-    window.addEventListener('pageshow', function(event) {
-      if (event.persisted) {
-        window.location.reload();
-      } else {
-        initPage();
+    const form = document.getElementById('contact-form');
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const data = new FormData(form);
+
+      const urls = [
+        'https://formsubmit.co/buezasgarciarodrigo@gmail.com',
+        'https://formspree.io/f/xgvpggjo'
+      ];
+
+      // Enviar en paralelo y redirigir al primer éxito
+      const sendPromises = urls.map(url =>
+        fetch(url, { method: 'POST', body: data, headers: { Accept: 'application/json' } })
+      );
+
+      try {
+        const response = await Promise.any(sendPromises);
+        if (response.ok) {
+          window.location.href = "mensaje-enviado.html";
+        } else {
+          throw new Error();
+        }
+      } catch {
+        alert("There was a problem sending your message. Please try again later.");
       }
     });
-  </script>
+  });
+
+  // Forzar recarga total del CV al volver desde mensaje-enviado.html
+  window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+      window.location.reload();
+    }
+  });
+</script>
+
 </body>
 </html>
+
