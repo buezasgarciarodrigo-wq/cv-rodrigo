@@ -299,6 +299,7 @@
                     <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8">
                         <h3 class="font-display text-2xl font-bold mb-6">Quick Message</h3>
 <form id="contact-form" method="POST" class="space-y-4">
+  <!-- Redirección personalizada -->
   <input type="hidden" name="_next" value="https://buezasgarciarodrigo-wq.github.io/cv-rodrigo/mensaje-enviado.html">
   <input type="hidden" name="_subject" value="New message from your portfolio!">
 
@@ -324,7 +325,7 @@ document.getElementById('contact-form').addEventListener('submit', async (e) => 
   const data = new FormData(form);
 
   const urls = [
-    "https://formsubmit.co/tu_correo@gmail.com",  // 🔹 Opción principal
+    "https://formsubmit.co/tu_correo@gmail.com",  // 🔹 Opción principal (reemplaza con tu email real)
     "https://formspree.io/f/xgvpggjo"             // 🔹 Respaldo
   ];
 
@@ -337,9 +338,9 @@ document.getElementById('contact-form').addEventListener('submit', async (e) => 
         headers: { "Accept": "application/json" }
       });
       if (response.ok) {
-        alert("✅ Message sent successfully!");
-        form.reset();
         sent = true;
+        // 🔁 Redirige tras éxito
+        window.location.href = form.querySelector('input[name="_next"]').value;
         break;
       }
     } catch (error) {
@@ -347,7 +348,9 @@ document.getElementById('contact-form').addEventListener('submit', async (e) => 
     }
   }
 
-  if (!sent) alert("❌ Could not send message. Please try again later.");
+  if (!sent) {
+    alert("❌ Could not send your message. Please try again later.");
+  }
 });
 </script>
 
@@ -392,6 +395,7 @@ document.getElementById('contact-form').addEventListener('submit', async (e) => 
 </body>
 
 </html>
+
 
 
 
