@@ -24,7 +24,6 @@
 </head>
 <body class="font-body bg-gray-50">
 
-  <!-- Navigation -->
   <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-sm shadow-sm z-50">
     <div class="max-w-6xl mx-auto px-6 py-4">
       <div class="flex justify-between items-center">
@@ -40,7 +39,6 @@
     </div>
   </nav>
 
-  <!-- Hero Section -->
   <section class="hero-bg min-h-screen flex items-center relative overflow-hidden" id="home">
     <div class="relative z-10 max-w-6xl mx-auto px-6 py-20">
       <div class="grid md:grid-cols-2 gap-12 items-center">
@@ -69,7 +67,6 @@
     </div>
   </section>
 
-  <!-- About Section -->
   <section class="py-20 bg-white" id="about">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center mb-16 fade-in">
@@ -110,7 +107,6 @@
     </div>
   </section>
 
-  <!-- Experience Section -->
   <section class="py-20 bg-gray-50" id="experience">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center mb-16 fade-in">
@@ -141,7 +137,6 @@
     </div>
   </section>
 
-  <!-- Skills Section -->
   <section class="py-20 bg-white" id="skills">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center mb-16 fade-in">
@@ -183,7 +178,6 @@
     </div>
   </section>
 
-  <!-- Contact Section -->
   <section class="py-20 bg-gray-900 text-white" id="contact">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center mb-16 fade-in">
@@ -251,7 +245,6 @@
     </div>
   </section>
 
-  <!-- Footer -->
   <footer class="bg-gray-800 text-gray-400 py-8">
     <div class="max-w-6xl mx-auto px-6 text-center">
       <p>&copy; 2025 Rodrigo Buezas García. All rights reserved.</p>
@@ -269,7 +262,6 @@
         entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('animate'); });
       }, { threshold: 0.3 });
       bars.forEach(bar => barObserver.observe(bar));
-
       const form = document.getElementById('contact-form');
       form.addEventListener('submit', async e => {
         e.preventDefault();
@@ -282,6 +274,11 @@
         }
         window.location.href = "mensaje-enviado.html";
       });
+    });
+    window.addEventListener('pageshow', function(event) {
+      if (event.persisted) {
+        window.location.reload();
+      }
     });
   </script>
 </body>
