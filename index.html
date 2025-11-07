@@ -298,24 +298,59 @@
                 <div class="fade-in">
                     <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8">
                         <h3 class="font-display text-2xl font-bold mb-6">Quick Message</h3>
-                           <form action="https://formspree.io/f/xgvpggjo" method="POST" class="space-y-4">
-                              <input type="hidden" name="_next" value="https://buezasgarciarodrigo-wq.github.io/cv-rodrigo/mensaje-enviado.html">
-                              <input type="hidden" name="_subject" value="New message from your portfolio!">
-                            
-                              <input type="text" name="name" placeholder="Your Name" required 
-                                     class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:border-white/40"/>
-                            
-                              <input type="email" name="email" placeholder="Your Email" required 
-                                     class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:border-white/40"/>
-                            
-                              <textarea name="message" placeholder="Your Message" rows="4" required 
-                                        class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:border-white/40 resize-none"></textarea>
-                            
-                              <button type="submit" 
-                                      class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-lg transition-all transform hover:scale-105">
-                                Send Message
-                              </button>
-                            </form>
+<form id="contact-form" method="POST" class="space-y-4">
+  <input type="hidden" name="_next" value="https://buezasgarciarodrigo-wq.github.io/cv-rodrigo/mensaje-enviado.html">
+  <input type="hidden" name="_subject" value="New message from your portfolio!">
+
+  <input type="text" name="name" placeholder="Your Name" required 
+         class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:border-white/40"/>
+
+  <input type="email" name="email" placeholder="Your Email" required 
+         class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:border-white/40"/>
+
+  <textarea name="message" placeholder="Your Message" rows="4" required 
+            class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:border-white/40 resize-none"></textarea>
+
+  <button type="submit" 
+          class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-lg transition-all transform hover:scale-105">
+    Send Message
+  </button>
+</form>
+
+<script>
+document.getElementById('contact-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const data = new FormData(form);
+
+  const urls = [
+    "https://formsubmit.co/tu_correo@gmail.com",  // 🔹 Opción principal
+    "https://formspree.io/f/xgvpggjo"             // 🔹 Respaldo
+  ];
+
+  let sent = false;
+  for (const url of urls) {
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        body: data,
+        headers: { "Accept": "application/json" }
+      });
+      if (response.ok) {
+        alert("✅ Message sent successfully!");
+        form.reset();
+        sent = true;
+        break;
+      }
+    } catch (error) {
+      console.warn("Fallback triggered:", error);
+    }
+  }
+
+  if (!sent) alert("❌ Could not send message. Please try again later.");
+});
+</script>
+
 
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-8">
@@ -357,6 +392,7 @@
 </body>
 
 </html>
+
 
 
 
